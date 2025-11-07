@@ -84,7 +84,7 @@ Then expose it in your packages or devShell:
 Now you can run it with:
 
 ```bash
-nix run .#godot
+nix run .#default
 ```
 
 🧠 Notes
