@@ -11,13 +11,13 @@ Run the latest Godot dev versions on Nix/NixOS — reproducible, sandboxed, and 
 You can run Godot without installing it:
 
 ```bash
-nix run github:redyf/godot-dev-flake
+nix run github:redyf/godot-nix-flake
 ```
 
 Or run the Mono version explicitly:
 
 ```bash
-nix run github:redyf/godot-dev-flake#4_6-dev3-mono
+nix run github:redyf/godot-nix-flake#4_6-dev3-mono
 ```
 
 Build manually
@@ -61,7 +61,7 @@ You can easily add more versions in the godotVersions section inside the flake.
 🔧 Example: Using Godot Mono with C#
 
 ```bash
-nix run github:redyf/godot-dev-flake#4_6-dev3-mono
+nix run github:redyf/godot-nix-flake#4_6-dev3-mono
 ```
 
 The dotnet-sdk_8 and runtime are already bundled — no additional setup needed.
@@ -72,13 +72,13 @@ You can immediately open or create C# Godot projects.
 If you want to depend on this flake inside your own:
 
 ```nix
-inputs.godot-dev-flake.url = "github:redyf/godot-dev-flake";
+inputs.godot-nix-flake.url = "github:redyf/godot-nix-flake";
 ````
 
 Then expose it in your packages or devShell:
 ```nix
 {
-  packages.x86_64-linux.godot = inputs.godot-dev-flake.packages.x86_64-linux."4_6-dev3";
+  packages.x86_64-linux.godot = inputs.godot-nix-flake.packages.x86_64-linux."4_6-dev3";
 }
 ```
 Now you can run it with:
