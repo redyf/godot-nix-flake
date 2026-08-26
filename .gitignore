@@ -1,2 +1,4 @@
-# nix build outputs
 result*
+
+# pi agent data
+.pi/
