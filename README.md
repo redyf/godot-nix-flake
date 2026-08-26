@@ -1,7 +1,7 @@
 # 🌀 Godot Dev Flake
 
 **Godot Engine development builds (Standard & Mono) packaged as a Nix flake.**  
-Run the latest Godot dev versions on Nix/NixOS — reproducible, sandboxed, and ready to use.
+Run the latest Godot dev versions on NixOS, any Nix-enabled Linux distribution, or macOS — reproducible, sandboxed, and ready to use.
 
 ---
 
@@ -17,7 +17,7 @@ nix run github:redyf/godot-nix-flake
 Or run the Mono version explicitly:
 
 ```bash
-nix run github:redyf/godot-nix-flake#4_6-dev3-mono
+nix run github:redyf/godot-nix-flake#4_8-dev3-mono
 ```
 
 Build manually
@@ -25,8 +25,8 @@ Build manually
 If you prefer to build it locally and keep the binaries:
 
 ```bash
-nix build .#4_6-dev3
-nix build .#4_6-dev3-mono
+nix build .#4_8-dev3
+nix build .#4_8-dev3-mono
 ```
 
 Then run from the result:
@@ -44,16 +44,18 @@ Then run from the result:
 
     🧰 Bundled with all required runtime libraries and .NET SDK
 
-    🧱 Works on Wayland, X11, and NVIDIA setups
+    🧱 Works on Wayland, X11, and NVIDIA setups (Linux)
 
     🐧 Runs perfectly on NixOS or any Nix-enabled Linux distribution
 
+    🍎 Native macOS builds (universal arm64 + x86_64, signed by Godot team) installed as .app bundles
+
 ## 📦 Available Versions
 
-| Package name      | Godot version | Type     | Status |
-|------------------|---------------|---------|--------|
-| 4_6-dev3         | 4.6 dev3      | Standard | ✅     |
-| 4_6-dev3-mono    | 4.6 dev3      | Mono     | ✅     |
+| Package name      | Godot version | Type     | Linux | macOS |
+|------------------|---------------|---------|-------|-------|
+| 4_8-dev3         | 4.8 dev3      | Standard | ✅     | ✅     |
+| 4_8-dev3-mono    | 4.8 dev3      | Mono     | ✅     | ✅     |
 
 
 You can easily add more versions in the godotVersions section inside the flake.
@@ -61,7 +63,7 @@ You can easily add more versions in the godotVersions section inside the flake.
 🔧 Example: Using Godot Mono with C#
 
 ```bash
-nix run github:redyf/godot-nix-flake#4_6-dev3-mono
+nix run github:redyf/godot-nix-flake#4_8-dev3-mono
 ```
 
 The dotnet-sdk_8 and runtime are already bundled — no additional setup needed.
@@ -78,7 +80,7 @@ inputs.godot-nix-flake.url = "github:redyf/godot-nix-flake";
 Then expose it in your packages or devShell:
 ```nix
 {
-  packages.x86_64-linux.godot = inputs.godot-nix-flake.packages.x86_64-linux."4_6-dev3";
+  packages.x86_64-linux.godot = inputs.godot-nix-flake.packages.x86_64-linux."4_8-dev3";
 }
 ```
 Now you can run it with:
@@ -91,7 +93,11 @@ nix run .#default
 
     Uses Nixpkgs unstable for access to latest dependencies
 
-    Automatically sets up PATH, DOTNET_ROOT, and LD_LIBRARY_PATH for the Mono build
+    Linux: automatically sets up PATH, DOTNET_ROOT, and LD_LIBRARY_PATH for the Mono build
+
+    macOS: installs Godot.app / Godot_mono.app into the result's Applications/ directory; the godot / godot-mono wrappers in bin/ launch the editor directly. No patch/patchelf step is needed — the shipped binaries are native universal2 Mach-O and already signed
+
+    macOS: to also see the app in Launchpad/Finder Apps, `open /path/to/result/Applications` or copy the .app to /Applications
 
     Fully sandboxed — no global installation needed
 
